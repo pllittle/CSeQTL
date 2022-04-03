@@ -1,0 +1,18 @@
+Package: CSeQTL
+Type: Package
+Title: Cell Type-Specific eQTL Mapping
+Version: 1.0.0
+Date: 2022-04-01
+Author: Paul Little
+Maintainer: Paul Little <plittle@fredhutch.org>
+Description: Perform bulk and cell type-specific 
+		eQTL mapping.
+Encoding: UTF-8
+Imports: Rcpp, smartr, ggplot2, multcomp,
+		emdbook, MatrixEQTL, data.table
+LinkingTo: Rcpp, RcppArmadillo
+RoxygenNote: 7.1.2
+License: GPL (>= 3)
+Suggests: 
+    rmarkdown, knitr
+VignetteBuilder: knitr
