@@ -17,6 +17,33 @@ Our R package performs cell type-specific eQTL mapping on bulk RNA-sequencing sa
 	 * latent batch effects (derived from residual TReC PCs)
 5. Cell type proportions
 
+## Installation
+
+```R
+req_packs = c("devtools","smartr","CSeQTL")
+all_packs = as.character(installed.packages()[,1])
+rerun = 0
+
+for(pack in req_packs){
+	if( pack %in% all_packs ){
+		library(package = pack,character.only = TRUE)
+		next
+	}
+	
+	if( pack %in% c("smartr","CSeQTL") ){
+		repo = sprintf("pllittle/%s",pack)
+		devtools::install_github(repo = repo,
+			build_vignettes = TRUE)
+	} else {
+		install.packages(pack)
+	}
+	
+	rerun = 1
+}
+
+if( rerun == 1 ) stop("Re-run above code")
+```
+
 ## Vignette
 
 ```R
