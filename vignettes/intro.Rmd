@@ -49,7 +49,7 @@ Assuming all software dependencies and **CSeQTL** installation are installed, we
 
 ```{r setup,warning = FALSE}
 # Load libraries
-req_packs = c("ggplot2","smartr","CSeQTL")
+req_packs = c("ggplot2","smarter","CSeQTL")
 for(pack in req_packs){
   library(package = pack,character.only = TRUE)
 }

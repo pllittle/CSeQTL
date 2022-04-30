@@ -11,7 +11,7 @@
 #' @importFrom multcomp glht adjusted
 #' @importFrom ggplot2 ggplot aes geom_bar xlab ylab labs theme 
 #'	element_text ggsave position_dodge
-#' @importFrom smartr smart_names smart_df smart_table
+#' @importFrom smarter smart_names smart_df smart_table
 #'	smart_progress
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib CSeQTL
