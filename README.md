@@ -1,4 +1,6 @@
-# CSeQTL
+<div align="left">
+<a href=""><img src="https://img.shields.io/badge/R-%23276DC3.svg?style=square&logo=r&logoColor=pink&label=CSeQTL" width="500" /></a>
+</div>
 
 <!-- badges: start -->
 ![C++](https://img.shields.io/badge/C++-%2300599C.svg?style=square&logo=c%2B%2B&logoColor=gold)
@@ -35,6 +37,7 @@ req_packs = c("devtools","Rcpp","RcppArmadillo",
 	"smarter","CSeQTL")
 all_packs = as.character(installed.packages()[,1])
 rerun = 0
+build_vign = ifelse(Sys.getenv("RSTUDIO_PANDOC") == "",FALSE,TRUE)
 
 for(pack in req_packs){
 	if( pack %in% all_packs ){
@@ -46,7 +49,7 @@ for(pack in req_packs){
 	if( pack %in% c("smartr","CSeQTL") ){
 		repo = sprintf("pllittle/%s",pack)
 		bb = tryCatch(devtools::install_github(repo = repo,
-			build_vignettes = TRUE,
+			build_vignettes = build_vign,
 			dependencies = TRUE),
 			error = function(ee){"error"})
 	} else {
