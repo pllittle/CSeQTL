@@ -101,7 +101,13 @@ vignette(topic = "intro",package = "CSeQTL")
 ```
 
 ## Citation
-Little, P., [Zhabotynsky, V.](https://github.com/yaceya), [Li, Y.](https://github.com/yunliUNC), [Lin, D.Y.](https://sph.unc.edu/adv_profile/danyu-lin-phd/), [Sun, W.](https://github.com/sunway1999) (2022). Cell type-specific Expression Quantitative Trait Loci. *bioRxiv*. [[HTML](https://www.biorxiv.org/content/10.1101/2022.03.31.486605v1), [PDF](https://www.biorxiv.org/content/10.1101/2022.03.31.486605v1.full.pdf)]
+Little, P., [Zhabotynsky, V.](https://github.com/yaceya), 
+[Li, Y.](https://github.com/yunliUNC), 
+[Lin, D.Y.](https://sph.unc.edu/adv_profile/danyu-lin-phd/), 
+[Sun, W.](https://github.com/sunway1999) (2022). Cell 
+type-specific Expression Quantitative Trait Loci. *bioRxiv*. 
+[[HTML](https://www.biorxiv.org/content/10.1101/2022.03.31.486605v1), 
+[PDF](https://www.biorxiv.org/content/10.1101/2022.03.31.486605v1.full.pdf)]
 
 
 
