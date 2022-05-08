@@ -1,5 +1,5 @@
 <div align="left">
-<a href=""><img src="https://img.shields.io/badge/R-%23276DC3.svg?style=square&logo=r&logoColor=pink&label=CSeQTL" width="500" /></a>
+<a href=""><img src="https://img.shields.io/badge/R-%23276DC3.svg?style=square&logo=r&logoColor=pink&label=CSeQTL" height="80" /></a>
 </div>
 
 <!-- badges: start -->
@@ -10,14 +10,36 @@
 
 ## Introduction
 
-Expression quantitative trait loci (eQTL) mapping is the search for genomic loci associated with gene expression. Traditional methods perform eQTL mapping on bulk tissue gene expression without accounting for the underlying sources of gene expression per cell type. Attempts to perform ``cell type-aware'' eQTL mapping commonly use linear models that transform the gene expression while adjusting for the genotype, a proposed measure for cell type prevalence (e.g. a marker gene's expression), and their interaction and proceed to perform hypothesis testing.
+<details>
+<summary>Click to expand!</summary>
 
-Our R package performs cell type-specific eQTL mapping on bulk RNA-sequencing samples by jointly modeling total read count (TReC) and allele-specific read count (ASReC). Our method, **CSeQTL**, introduces novel features and fully extends **TReCASE** [[HTML](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3218220/), [PDF](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3218220/pdf/nihms-307768.pdf), [Software](https://github.com/Sun-lab/asSeq)] and **pTReCASE** [[HTML](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7410098/), [PDF](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7410098/pdf/nihms-1028292.pdf), [Software](https://github.com/Sun-lab/pTReCASE)] methodologies.
+Expression quantitative trait loci (eQTL) mapping is the search 
+for genomic loci associated with gene expression. Traditional 
+methods perform eQTL mapping on bulk tissue gene expression 
+without accounting for the underlying sources of gene expression 
+per cell type. Attempts to perform ``cell type-aware'' eQTL 
+mapping commonly use linear models that transform the gene 
+expression while adjusting for the genotype, a proposed measure 
+for cell type prevalence (e.g. a marker gene's expression), and 
+their interaction and proceed to perform hypothesis testing.
+
+Our R package performs cell type-specific eQTL mapping on bulk 
+RNA-sequencing samples by jointly modeling total read count (TReC) 
+and allele-specific read count (ASReC). Our method, **CSeQTL**, 
+introduces novel features and fully extends **TReCASE** 
+[[HTML](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3218220/), 
+[PDF](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3218220/pdf/nihms-307768.pdf), 
+[Software](https://github.com/Sun-lab/asSeq)] and **pTReCASE** 
+[[HTML](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7410098/), 
+[PDF](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7410098/pdf/nihms-1028292.pdf), 
+[Software](https://github.com/Sun-lab/pTReCASE)] methodologies.
 
 <p align="center">
 <img src="images/ex_CSeQTL_reads.png" width="50%" />
 <p align="center"><em>Example of total read counts and allele-specific or haplotype read counts.</em></p>
 </p>
+
+</details>
 
 ## Required Input Data
 
@@ -31,6 +53,9 @@ Our R package performs cell type-specific eQTL mapping on bulk RNA-sequencing sa
 5. Cell type proportions
 
 ## Installation
+
+<details>
+<summary>Click to expand!</summary>
 
 ```R
 req_packs = c("devtools","Rcpp","RcppArmadillo",
@@ -65,6 +90,8 @@ for(pack in req_packs){
 
 if( rerun == 1 ) stop("Re-run above code")
 ```
+
+</details>
 
 ## Vignette
 
