@@ -6,6 +6,7 @@
 ![C++](https://img.shields.io/badge/C++-%2300599C.svg?style=square&logo=c%2B%2B&logoColor=gold)
 ![R](https://img.shields.io/badge/R-%23276DC3.svg?style=square&logo=r&logoColor=pink)
 ![CRAN status](https://www.r-pkg.org/badges/version/CSeQTL)
+[![DOI](https://zenodo.org/badge/DOI/10.1101/2022.03.31.486605.svg)](https://doi.org/10.1101/2022.03.31.486605)
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![](https://img.shields.io/github/languages/code-size/pllittle/CSeQTL.svg)](https://github.com/pllittle/CSeQTL)
 [![](https://img.shields.io/github/last-commit/pllittle/CSeQTL.svg)](https://github.com/pllittle/CSeQTL/commits/master)

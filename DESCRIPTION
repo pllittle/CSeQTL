@@ -9,7 +9,7 @@ Description: Perform bulk and cell type-specific
 		eQTL mapping.
 Encoding: UTF-8
 Imports: Rcpp, smarter, ggplot2, multcomp,
-		emdbook, MatrixEQTL, data.table
+		emdbook, MatrixEQTL, data.table, HelpersMG
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 7.1.2
 License: GPL (>= 3)
