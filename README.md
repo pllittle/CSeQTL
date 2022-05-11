@@ -7,6 +7,7 @@
 ![R](https://img.shields.io/badge/R-%23276DC3.svg?style=square&logo=r&logoColor=pink)
 ![CRAN status](https://www.r-pkg.org/badges/version/CSeQTL)
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![](https://img.shields.io/github/languages/code-size/pllittle/CSeQTL.svg)](https://github.com/pllittle/CSeQTL)
 <!-- badges: end -->
 
 ## Introduction
