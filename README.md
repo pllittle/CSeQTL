@@ -14,9 +14,6 @@
 
 ## Introduction
 
-<details>
-<summary>Click to expand!</summary>
-
 Expression quantitative trait loci (eQTL) mapping is the search 
 for genomic loci associated with gene expression. Traditional 
 methods perform eQTL mapping on bulk tissue gene expression 
@@ -42,8 +39,6 @@ introduces novel features and fully extends **TReCASE**
 <a href="https://raw.githubusercontent.com/pllittle/CSeQTL/master/images/ex_CSeQTL_reads.png"><img src="images/ex_CSeQTL_reads.png" width="50%" /></a>
 <p align="center"><em>Example of total read counts and allele-specific or haplotype read counts.</em></p>
 </p>
-
-</details>
 
 ## Required Input Data
 
