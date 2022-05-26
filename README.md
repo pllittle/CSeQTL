@@ -39,7 +39,7 @@ introduces novel features and fully extends **TReCASE**
 [Software](https://github.com/Sun-lab/pTReCASE)] methodologies.
 
 <p align="center">
-<img src="images/ex_CSeQTL_reads.png" width="50%" />
+<a href="https://raw.githubusercontent.com/pllittle/CSeQTL/master/images/ex_CSeQTL_reads.png"><img src="images/ex_CSeQTL_reads.png" width="50%" /></a>
 <p align="center"><em>Example of total read counts and allele-specific or haplotype read counts.</em></p>
 </p>
 
