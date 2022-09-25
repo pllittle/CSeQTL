@@ -25,13 +25,5 @@
 #' @useDynLib CSeQTL
 NULL
 
-# Create package
-# rm(list=ls()); library(smarter)
-# user_dir = gsub("\\\\","/",Sys.getenv("USERPROFILE"))
-# git_dir = file.path(user_dir,"Desktop/github")
-# smart_prepPack(pack_dir = file.path(git_dir,"CSeQTL"),
-#		pandoc = "C:/Program Files/RStudio/bin/pandoc",
-#		make_vign = !TRUE,cran = FALSE,
-#		build_dir = NULL)
 
 ###

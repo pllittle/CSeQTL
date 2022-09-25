@@ -1053,6 +1053,11 @@ run_OLS = function(TREC,log_depth,XX,SNP,RHO,trim = FALSE,thres_TRIM = 20){
 		SNP = inputs$SNP
 		RHO = inputs$RHO
 		YY = NULL
+		
+		TREC = TREC; log_depth = dat$log_depth; XX = XX; 
+		SNP = SNP; RHO = RHO; trim = trim; thres_TRIM = trim_thres
+		
+		
 	}
 	
 	# Constants
@@ -1140,8 +1145,12 @@ run_OLS = function(TREC,log_depth,XX,SNP,RHO,trim = FALSE,thres_TRIM = 20){
 		
 		# Hypothesis testing
 		tout = glht(model = lm_full,linfct = KK,alternative = "two.sided")
-		tout2 = summary(tout,test = adjusted("none"))$test$pvalues
+		# tout2 = summary(tout,test = adjusted("none"))$test$pvalues
+		tout2 = pchisq(( summary(tout,test = adjusted("none"))$test$tstat )^2,
+			df = 1,lower.tail = FALSE)
 		out_df = smart_df(CT = seq(QQ),PVAL = tout2); rm(tout,tout2)
+		
+		if( any(out_df$PVAL == 0) ) stop("PVAL equals zero")
 		
 		# Get eqtl effect size estimates
 		eqtl_est = c(KK %*% lm_full$coefficients)

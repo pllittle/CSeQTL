@@ -11,6 +11,7 @@
 #'	of the gz compressed gtf file
 #' @export
 prep_gene_info = function(work_dir,gtf_gz_fn = NULL){
+	
 	if(FALSE){
 		work_dir = "C:/Users/Admin/Downloads"
 		gtf_gz_fn = file.path(work_dir,
@@ -67,3 +68,5 @@ prep_gene_info = function(work_dir,gtf_gz_fn = NULL){
 	
 
 }
+
+###
