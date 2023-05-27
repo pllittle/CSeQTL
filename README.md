@@ -96,7 +96,8 @@ vignette(topic = "intro",package = "CSeQTL")
 ```
 
 ## Citation
-Little, P., Liu, S., [Zhabotynsky, V.](https://github.com/yaceya), 
+Little, P., [Liu, S.](https://github.com/liusi2019), 
+[Zhabotynsky, V.](https://github.com/yaceya), 
 [Li, Y.](https://github.com/yunliUNC), 
 [Lin, D.Y.](https://sph.unc.edu/adv_profile/danyu-lin-phd/), 
 [Sun, W.](https://github.com/sunway1999) (2023). A computational method 
