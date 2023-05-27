@@ -59,35 +59,31 @@ introduces novel features and fully extends **TReCASE**
 ```R
 req_packs = c("devtools","Rcpp","RcppArmadillo",
 	"smarter","CSeQTL")
-all_packs = as.character(installed.packages()[,1])
-rerun = 0
 build_vign = ifelse(Sys.getenv("RSTUDIO_PANDOC") == "",FALSE,TRUE)
 
 for(pack in req_packs){
-	if( pack %in% all_packs ){
-		library(package = pack,character.only = TRUE)
+	
+	chk_pack = tryCatch(find.package(pack),
+		error = function(ee){NULL})
+	
+	if( !is.null(chk_pack) ){
+		library(package = pack,
+			character.only = TRUE)
 		next
 	}
 	
-	bb = NULL
-	if( pack %in% c("smartr","CSeQTL") ){
+	if( pack %in% c("smarter","CSeQTL") ){
 		repo = sprintf("pllittle/%s",pack)
-		bb = tryCatch(devtools::install_github(repo = repo,
+		install_github(repo = repo,
 			build_vignettes = build_vign,
-			dependencies = TRUE),
-			error = function(ee){"error"})
+			dependencies = TRUE)
 	} else {
-		bb = tryCatch(install.packages(pkgs = pack,
-			dependencies = TRUE),
-			error = function(ee){"error"})
+		install.packages(pkgs = pack,
+			dependencies = TRUE)
 	}
 	
-	if( !is.null(bb) && bb == "error" )
-		stop(sprintf("Error for package = %s",pack))
-	rerun = 1
 }
 
-if( rerun == 1 ) stop("Re-run above code")
 ```
 
 </details>
@@ -100,13 +96,14 @@ vignette(topic = "intro",package = "CSeQTL")
 ```
 
 ## Citation
-Little, P., [Zhabotynsky, V.](https://github.com/yaceya), 
+Little, P., Liu, S., [Zhabotynsky, V.](https://github.com/yaceya), 
 [Li, Y.](https://github.com/yunliUNC), 
 [Lin, D.Y.](https://sph.unc.edu/adv_profile/danyu-lin-phd/), 
-[Sun, W.](https://github.com/sunway1999) (2022). Cell 
-type-specific Expression Quantitative Trait Loci. *bioRxiv*. 
-[[HTML](https://www.biorxiv.org/content/10.1101/2022.03.31.486605v1), 
-[PDF](https://www.biorxiv.org/content/10.1101/2022.03.31.486605v1.full.pdf)]
+[Sun, W.](https://github.com/sunway1999) (2023). A computational method 
+for cell type-specific expression quantitative trait loci mapping using 
+bulk RNA-seq data. *Nature Communications*. 
+[[HTML](https://www.nature.com/articles/s41467-023-38795-w), 
+[SUPP](https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-023-38795-w/MediaObjects/41467_2023_38795_MOESM1_ESM.pdf)]
 
 
 
