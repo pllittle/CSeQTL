@@ -3,6 +3,7 @@ rm(list = ls())
 git_dir = file.path(getwd(),"../../")
 pack = "CSeQTL"
 pack_dir = file.path(git_dir,pack)
+pack_dir
 if( !dir.exists(pack_dir) ) q("no")
 chk_pack = tryCatch(find.package(pack),
 	warning = function(ww){NULL},
