@@ -479,8 +479,12 @@ CSeQTL_linearTest = function(input,XX,RHO,SNP,YY = NULL,MARG = FALSE,
 }
 
 #' @title CSeQTL_run_MatrixEQTL
-#' @param RD A positive numeric vector of log transformed
-#'	library sizes per subject.
+#' @param TREC A matrix of integer total read counts, rows are genes
+#'	with row labels with syntax "gene_name:chrom:start:end", 
+#'	columns are samples with column labels.
+#' @param RD A positive numeric vector of library sizes per sample.
+#' @param SNP An integer matrix, rows are genomic loci with row labels
+#'	such as "chrom:pos", columns correspond to samples with column labels.
 #' @param out_cis_fn A full path filename string to store
 #'	MatrixEQTL output
 #' @param cisDist A positive integer for number of SNPs to
@@ -489,14 +493,6 @@ CSeQTL_linearTest = function(input,XX,RHO,SNP,YY = NULL,MARG = FALSE,
 #'
 #' @export
 CSeQTL_run_MatrixEQTL = function(TREC,RD,XX,SNP,out_cis_fn,cisDist = 1e6){
-	if(FALSE){
-		TREC = TREC
-		RD = exp(sim$dat$log_lib_size)
-		XX = sim$XX
-		SNP = snps
-		out_cis_fn = "C:/Users/Admin/Desktop/blah.txt"
-		cisDist = 1e6
-	}
 	
 	normscore <- function(vec) {
 		len  = length(na.omit(vec))+1
@@ -523,14 +519,17 @@ CSeQTL_run_MatrixEQTL = function(TREC,RD,XX,SNP,out_cis_fn,cisDist = 1e6){
 	cvrt = t(XX[,-1])
 	colnames(cvrt) = colnames(TREC)
 	cvrt = SlicedData$new(cvrt)
-	
-	snpspos = smart_df(snpid = rownames(snps))
+	snpspos = smart_df(snpid = rownames(SNP))
 	snpspos$chr = sapply(snpspos$snpid,function(xx)
 		strsplit(xx,":")[[1]][1],USE.NAMES = FALSE)
 	snpspos$chr = gsub("chr","",snpspos$chr)
 	snpspos$pos = as.integer(sapply(snpspos$snpid,function(xx)
 		strsplit(xx,":")[[1]][2],USE.NAMES = FALSE))
-
+	if( ncol(snpspos) != 3 ){
+		print(str(snpspos))
+		print(head(snpspos))
+	}
+	
 	genepos = smart_df(geneid = rownames(TREC))
 	genepos$chr = sapply(rownames(TREC),function(xx)
 		strsplit(xx,":")[[1]][2],USE.NAMES = FALSE)
@@ -939,8 +938,8 @@ CSeQTL_GS = function(XX,TREC,SNP,hap2,ASREC,PHASE,RHO,trim = TRUE,
 	if( !(class(hap2) %in% ni_class) ) 		stop("hap2 should be a integer/numeric vector!")
 	if( !(class(ASREC) %in% ni_class) ) 	stop("ASREC should be a integer/numeric vector!")
 	if( !(class(PHASE) %in% ni_class) ) 	stop("PHASE should be a integer/numeric vector!")
-	if( !any(class(RHO) %in% "matrix") ) 	stop("RHO should be a matrix!")
-	if( class(trim) != "logical" ) 				stop("trim should be TRUE/FALSE!")
+	if( !is(RHO,"matrix") ) 	stop("RHO should be a matrix!")
+	if( !is(trim,"logical") ) 				stop("trim should be TRUE/FALSE!")
 	
 	if( trim ){
 		if( !(class(thres_TRIM) %in% c("numeric","integer")) )

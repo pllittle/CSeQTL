@@ -7,17 +7,18 @@
 CSeQTL_run_MatrixEQTL(TREC, RD, XX, SNP, out_cis_fn, cisDist = 1e+06)
 }
 \arguments{
-\item{TREC}{An integer vector of total read counts.}
+\item{TREC}{A matrix of integer total read counts, rows are genes
+with row labels with syntax "gene_name:chrom:start:end", 
+columns are samples with column labels.}
 
-\item{RD}{A positive numeric vector of log transformed
-library sizes per subject.}
+\item{RD}{A positive numeric vector of library sizes per sample.}
 
 \item{XX}{A numeric design matrix of baseline covariates 
 including the intercept in the first column and centered 
 continuous covariates.}
 
-\item{SNP}{An integer vector of phased genotypes coded 0 (AA),
-1 (AB), 2 (BA), 3 (BB), and 5 (NA).}
+\item{SNP}{An integer matrix, rows are genomic loci with row labels
+such as "chrom:pos", columns correspond to samples with column labels.}
 
 \item{out_cis_fn}{A full path filename string to store
 MatrixEQTL output}

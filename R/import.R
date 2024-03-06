@@ -3,7 +3,7 @@
 #' @importFrom stats rbinom rgamma runif pchisq rnbinom
 #'	rbeta rpois rnorm qnorm lm residuals predict 
 #'	cooks.distance median mad na.omit quantile
-#' @importFrom utils head
+#' @importFrom utils head str
 #' @importFrom grDevices rgb
 #' @importFrom MatrixEQTL modelLINEAR Matrix_eQTL_main 
 #'	SlicedData
@@ -22,6 +22,7 @@
 #' @importFrom GenomicFeatures makeTxDbFromGFF exonsBy
 #' @importFrom R.utils gzip
 #' @importFrom Rcpp sourceCpp
+#' @importFrom methods is
 #' @useDynLib CSeQTL
 NULL
 

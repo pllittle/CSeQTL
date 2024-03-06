@@ -11,9 +11,9 @@ Description: Perform bulk and cell type-specific
 Encoding: UTF-8
 Imports: Rcpp, smarter, ggplot2, multcomp,
 	emdbook, MatrixEQTL, data.table, HelpersMG,
-	R.utils, GenomicFeatures
+	R.utils, GenomicFeatures, methods
 LinkingTo: Rcpp, RcppArmadillo
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.3
 License: GPL (>= 3)
 Suggests: 
 	rmarkdown, knitr
