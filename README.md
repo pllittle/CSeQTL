@@ -6,11 +6,20 @@
 ![C++](https://img.shields.io/badge/C++-%2300599C.svg?style=square&logo=c%2B%2B&logoColor=gold)
 ![R](https://img.shields.io/badge/R-%23276DC3.svg?style=square&logo=r&logoColor=pink)
 ![CRAN status](https://www.r-pkg.org/badges/version/CSeQTL)
-[![DOI](https://zenodo.org/badge/DOI/10.1101/2022.03.31.486605.svg)](https://doi.org/10.1101/2022.03.31.486605)
+[![DOI](https://zenodo.org/badge/DOI/10.1038/s41467-023-38795-w.svg)](https://doi.org/10.1038/s41467-023-38795-w)
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![](https://img.shields.io/github/languages/code-size/pllittle/CSeQTL.svg)](https://github.com/pllittle/CSeQTL)
 [![](https://img.shields.io/github/last-commit/pllittle/CSeQTL.svg)](https://github.com/pllittle/CSeQTL/commits/master)
 <!-- badges: end -->
+
+## Table of Contents
+
+* [Introduction](#introduction)
+* [Input Data](#input-data)
+* [Installation](#installation)
+* [Vignette](#vignette)
+* [Citation](#citation)
+* [Contact](#contact)
 
 ## Introduction
 
@@ -40,7 +49,7 @@ introduces novel features and fully extends **TReCASE**
 <p align="center"><em>Example of total read counts and allele-specific or haplotype read counts.</em></p>
 </p>
 
-## Required Input Data
+## Input Data
 
 1. TReC data
 2. ASReC data (haplotype 1 and 2 read counts)
@@ -106,5 +115,7 @@ bulk RNA-seq data. *Nature Communications*.
 [[HTML](https://www.nature.com/articles/s41467-023-38795-w), 
 [SUPP](https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-023-38795-w/MediaObjects/41467_2023_38795_MOESM1_ESM.pdf)]
 
+## Contact
 
+* [Feel free to reach out](mailto:pllittle321@gmail.com?subject=CSeQTL:%20Q%26A&body=Dear%20Dr.%20Little,%0A%0A%0A)
 
