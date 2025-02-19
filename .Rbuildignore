@@ -1,3 +1,5 @@
 debug
 ^LICENSE\.md$
 ^images
+vignettes/*_cache
+vignettes/*_files

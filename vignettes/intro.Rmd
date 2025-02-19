@@ -1,7 +1,7 @@
 ---
 title: "Introduction to CSeQTL"
 author: "Paul Little"
-date: "`r Sys.Date()`"
+date: "Last Refresh: `r Sys.Date()`"
 header-includes:
   - \usepackage{amsmath}
   - \usepackage{amssymb}
@@ -20,17 +20,15 @@ vignette: >
   %\VignetteIndexEntry{test}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-# bibliography: references.bib
+bibliography: references.bib
+csl: apa.csl
 ---
 
 ```{r include = FALSE}
-rm(list = ls())
-
 knitr::opts_chunk$set(
 	collapse = TRUE,comment = "#>",
-	echo = TRUE,cache = FALSE,
+	echo = TRUE,cache = TRUE,
 	dev = "png")
-ot_eval = TRUE
 ```
 
 \def\T{\text{T}}
@@ -45,7 +43,7 @@ ot_eval = TRUE
 
 # Overview
 
-Assuming all software dependencies and **CSeQTL** installation are installed, we can begin.
+Assuming all software dependencies and **CSeQTL** [@little2023computational] installation are installed, we can begin.
 
 ```{r setup,warning = FALSE}
 # Load libraries
@@ -136,7 +134,7 @@ ggplot(data = sim$dat,
 
 ### Bulk Test
 
-Based on the above TReC boxplot, the phased SNP genotype appears to be an eQTL. However, this has yet to account for batch effects. Let us test for a bulk eQTL accounting for batch covariates `sim$XX`. Make sure to center continuous covariates.
+Based on the above TReC boxplot, the phased SNP genotype appears to be an eQTL. However, this has yet to account for batch effects. Let us test for a bulk eQTL accounting for batch covariates `sim$XX`. Make sure to center continuous covariates. Notice that CSeQTL, treating bulk TReC as sourced from a single cell type, corresponds to the **TReCASE** [@sun2012statistical] method.
 
 ```{r R.options = list(width = 200)}
 summary(sim$XX)
@@ -269,7 +267,7 @@ From above, we see that modeling cell types through proportion and reference all
 
 ## OLS
 
-We benchmark CSeQTL against OLS, an ordinary least squares model. 
+We benchmark CSeQTL against OLS, an ordinary least squares model. This approach corresponds to **Matrix eQTL** [@shabalin2012matrix].
 
 ### Bulk eQTL
 
