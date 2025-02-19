@@ -237,7 +237,7 @@ CSeQTL_dataGen = function(NN,MAF,true_BETA0 = log(1e3),true_KAPPA,true_ETA,
 	# generate cell type proportion matrix, each cell type has sufficient variability
 	if(show && QQ > 1) boxplot(true_RHO,xlab = "Cell Type",ylab = "Proportion")
 	
-	if( cnfSNP && all(true_ETA == 1) ){
+	if( cnfSNP && all(true_ETA == 1) && QQ > 1 ){
 		if( show ) cat(sprintf("%s: Re-arrange simulated SNPs to induce confounding ...\n",date()))
 		# true_RHO = sim$true_RHO; true_KAPPA = c(1,2,3); NN = 3e2; true_SNP = sim$true_SNP
 		OO = log(c(true_RHO %*% true_KAPPA)); OO[1:10]

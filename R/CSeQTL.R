@@ -851,7 +851,12 @@ CSeQTL_smart = function(TREC,hap2,ASREC,PHASE,SNP,RHO,XX,
 	nz = which(diag(bs_out$OPT$HESS) != 0)
 	np = nrow(bs_out$OPT$HESS)
 	bs_out$OPT$COV = matrix(0,np,np)
-	bs_out$OPT$COV[nz,nz] = solve(-bs_out$OPT$HESS[nz,nz])
+	rcon = rcond(bs_out$OPT$HESS[nz,nz])
+	if( rcon != 0 ){
+		bs_out$OPT$COV[nz,nz] = solve(-bs_out$OPT$HESS[nz,nz],tol = 0.1 * rcon)
+	} else {
+		bs_out$OPT$COV[nz,nz] = NA
+	}
 	bs_out$HYPO$PVAL = smart_names(MAT = bs_out$HYPO$PVAL,
 		ROW = colnames(RHO),COL = c("TReC","TReCASE","CisTrans"))
 	bs_out$HYPO$mat_ETA = smart_names(MAT = bs_out$HYPO$mat_ETA,
