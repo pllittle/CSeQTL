@@ -2,6 +2,26 @@
 # CS_eQTL Functions
 # ----------
 
+chk_XX = function(XX){
+	# XX = cbind(1,c(1,2))
+	
+	if( !is(XX,"matrix") ) stop("XX should be a matrix")
+	if( !all(XX[,1] == 1) ) stop("XX's first column should be all ones")
+	
+	for(ii in seq(ncol(XX))){
+		
+		if( ii == 1 ) next
+		u_XX = unique(XX[,ii])
+		if( all(u_XX %in% c(0,1)) ) next
+		
+		mean_XX = mean(XX[,ii])
+		if( abs(mean_XX) < 1e-10 ) next
+		
+		stop(sprintf("XX's column %s is not mean zero",ii))
+		
+	}
+	
+}
 
 # ----------
 # CSeQTL Analysis Functions
@@ -33,6 +53,8 @@ CSeQTL_full_analysis = function(TREC,hap2,ASREC,PHASE,SNP,RHO,XX,
 	log_lib_size,vec_MARG = c(TRUE,FALSE),vec_TRIM = c(TRUE,FALSE),
 	vec_PERM = c(TRUE,FALSE),thres_TRIM = 10,ncores = 1,
 	show = TRUE){
+	
+	chk_XX(XX = XX)
 	
 	NN = nrow(XX); QQ = ncol(RHO)
 	marg_RHO = matrix(1,NN,1)
@@ -113,7 +135,7 @@ CSeQTL_full_analysis = function(TREC,hap2,ASREC,PHASE,SNP,RHO,XX,
 		
 		if( model == "cseqtl" ){
 			GS_index 	= matrix(c(0,0),1,2); GS_index
-			if( show ) cat(sprintf("trim = %s; perm = %s; useASREC = %s\n",trim,perm,use_asrec))
+			if( show ) message(sprintf("trim = %s; perm = %s; useASREC = %s\n",trim,perm,use_asrec),appendLF = FALSE)
 			out_list = Rcpp_CSeQTL_GS(XX = XX,TREC_0 = t(final_TREC),SNP = t(final_SNP),
 				hap2 = t(hap2),ASREC = t(ASREC),PHASE_0 = t(final_PHASE),RHO = final_RHO,
 				GS_index = GS_index,trim = FALSE,show = show,prompt = show,ncores = 1)
@@ -258,6 +280,8 @@ CSeQTL_linearTest = function(input,XX,RHO,SNP,YY = NULL,MARG = FALSE,
 		RHO = matrix(rowSums(RHO),ncol = 1)
 		colnames(RHO) = "Bulk"
 	}
+	
+	chk_XX(XX = XX)
 	
 	# Constants
 	NN = nrow(RHO)
@@ -516,6 +540,8 @@ CSeQTL_run_MatrixEQTL = function(TREC,RD,XX,SNP,out_cis_fn,cisDist = 1e6){
 	gene = t(apply(gene,1,normscore))
 	gene = SlicedData$new(gene)
 	
+	chk_XX(XX = XX)
+	
 	cvrt = t(XX[,-1])
 	colnames(cvrt) = colnames(TREC)
 	cvrt = SlicedData$new(cvrt)
@@ -746,6 +772,8 @@ CSeQTL_smart = function(TREC,hap2,ASREC,PHASE,SNP,RHO,XX,
 	if( is.null(colnames(RHO)) ) stop("Set colnames(RHO)!")
 	if( is.null(colnames(XX)) ) stop("Set colnames(XX)!")
 	
+	chk_XX(XX = XX)
+	
 	# Constants
 	PP = ncol(XX)
 	QQ = ncol(RHO)
@@ -837,7 +865,7 @@ CSeQTL_smart = function(TREC,hap2,ASREC,PHASE,SNP,RHO,XX,
 	if( bs_out$HYPO$swap_CT != 1 ){
 		swap_CT = bs_out$HYPO$swap_CT
 		cell_types[c(1,swap_CT)] = cell_types[c(swap_CT,1)]
-		if( show ) cat(sprintf("Cell type %s was set as the reference\n",colnames(RHO)[swap_CT]))
+		if( show ) message(sprintf("Cell type %s was set as the reference\n",colnames(RHO)[swap_CT]),appendLF = FALSE)
 		names(bs_out$OPT$PARS)[kap_idx] = paste0("logKAP.",cell_types[-1])
 		names(bs_out$OPT$PARS)[eta_idx] = paste0("logETA.",cell_types)
 		names(bs_out$OPT$PARS)[alp_idx] = paste0("logALP.",cell_types)
@@ -870,8 +898,7 @@ CSeQTL_smart = function(TREC,hap2,ASREC,PHASE,SNP,RHO,XX,
 		bs_out$OPT$Convergence_Status = "Failed"
 	}
 	if( show ){
-		cat(sprintf("Convergence_Status = %s\n",
-			bs_out$OPT$Convergence_Status))
+		message(sprintf("Convergence_Status = %s\n",bs_out$OPT$Convergence_Status),appendLF = FALSE)
 	}
 	
 	# Output
@@ -936,18 +963,19 @@ CSeQTL_GS = function(XX,TREC,SNP,hap2,ASREC,PHASE,RHO,trim = TRUE,
 	ncores = 1,show = TRUE){
 	
 	# Check input classes are correct
-	ni_class = c("integer","numeric")
-	if( !any(class(XX) %in% "matrix") )		stop("XX should be a matrix!")
-	if( !(class(TREC) %in% ni_class) ) 		stop("TREC should be a integer/numeric vector!")
-	if( !any(class(SNP) %in% "matrix") ) 	stop("SNP should be a matrix!")
-	if( !(class(hap2) %in% ni_class) ) 		stop("hap2 should be a integer/numeric vector!")
-	if( !(class(ASREC) %in% ni_class) ) 	stop("ASREC should be a integer/numeric vector!")
-	if( !(class(PHASE) %in% ni_class) ) 	stop("PHASE should be a integer/numeric vector!")
+	chk_XX(XX = XX)
+	if( !is(TREC,"numeric") ) stop("TREC should be a integer/numeric vector!")
+	if( !is(SNP,"matrix") ) 	stop("SNP should be a matrix!")
+	if( !is(hap2,"numeric") ) 		stop("hap2 should be a integer/numeric vector!")
+	if( !is(ASREC,"numeric") ) 	stop("ASREC should be a integer/numeric vector!")
+	if( !is(PHASE,"numeric") ) 	stop("PHASE should be a integer/numeric vector!")
 	if( !is(RHO,"matrix") ) 	stop("RHO should be a matrix!")
 	if( !is(trim,"logical") ) 				stop("trim should be TRUE/FALSE!")
 	
 	if( trim ){
-		if( !(class(thres_TRIM) %in% c("numeric","integer")) )
+		if( !is(thres_TRIM,"numeric") )
+			stop("thres_TRIM should be a positive numeric value!")
+		if( thres_TRIM <= 0 )
 			stop("thres_TRIM should be a positive numeric value!")
 	}
 	
@@ -1064,6 +1092,8 @@ run_OLS = function(TREC,log_depth,XX,SNP,RHO,trim = FALSE,thres_TRIM = 20){
 		
 	}
 	
+	chk_XX(XX = XX)
+	
 	# Constants
 	NN = nrow(RHO)
 	QQ = ncol(RHO)
@@ -1120,8 +1150,8 @@ run_OLS = function(TREC,log_depth,XX,SNP,RHO,trim = FALSE,thres_TRIM = 20){
 	for(ss in seq(SS)){
 		# ss = 1
 		# ss = which(out_res$SNP == rownames(SNP2))
-		if( ss %% 5 == 0 ) cat(".")
-		if( ss %% 2e2 == 0 || ss == SS ) cat(sprintf("%s out of %s\n",ss,SS))
+		if( ss %% 5 == 0 ) message(".",appendLF = FALSE)
+		if( ss %% 2e2 == 0 || ss == SS ) message(sprintf("%s out of %s\n",ss,SS),appendLF = FALSE)
 		
 		# Create interaction covariates between proportions and genotype
 		if(QQ == 1){

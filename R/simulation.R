@@ -220,25 +220,24 @@ CSeQTL_dataGen = function(NN,MAF,true_BETA0 = log(1e3),true_KAPPA,true_ETA,
 	if( !(batch %in% c(0,1)) ) stop("batch should be 0 or 1")
 	
 	# Simulate SNP eQTL
-	if( show ) cat(sprintf("%s: Simulate phased SNPs ...\n",date()))
+	if( show ) message(sprintf("%s: Simulate phased SNPs ...\n",date()),appendLF = FALSE)
 	geno_probs 	= c((1-MAF)^2,MAF*(1-MAF),MAF*(1-MAF),MAF^2)
 	genotypes 	= seq(0,3) # 0/1/2/3 <=> AA/AB/BA/BB
 	true_SNP 		= sample(genotypes,NN,replace = TRUE,prob = geno_probs)
 	
 	if( show ){
-		# cat("Simulate SNP eQTL ...\n")
 		print(smart_table(true_SNP))
 	}
 	
 	# Simulate RHO
-	if( show ) cat(sprintf("%s: Simulate cell type proportions ...\n",date()))
+	if( show ) message(sprintf("%s: Simulate cell type proportions ...\n",date()),appendLF = FALSE)
 	QQ = length(true_ETA)
 	true_RHO = gen_true_RHO(NN = NN,QQ = QQ,RHO = RHO) 
 	# generate cell type proportion matrix, each cell type has sufficient variability
 	if(show && QQ > 1) boxplot(true_RHO,xlab = "Cell Type",ylab = "Proportion")
 	
 	if( cnfSNP && all(true_ETA == 1) && QQ > 1 ){
-		if( show ) cat(sprintf("%s: Re-arrange simulated SNPs to induce confounding ...\n",date()))
+		if( show ) message(sprintf("%s: Re-arrange simulated SNPs to induce confounding ...\n",date()),appendLF = FALSE)
 		# true_RHO = sim$true_RHO; true_KAPPA = c(1,2,3); NN = 3e2; true_SNP = sim$true_SNP
 		OO = log(c(true_RHO %*% true_KAPPA)); OO[1:10]
 		true_SNP2 = rep(NA,NN); agg_rank = 0
@@ -268,7 +267,7 @@ CSeQTL_dataGen = function(NN,MAF,true_BETA0 = log(1e3),true_KAPPA,true_ETA,
 	}
 	
 	# Simulate covariates
-	if( show ) cat(sprintf("%s: Simulate covariates ...\n",date()))
+	if( show ) message(sprintf("%s: Simulate covariates ...\n",date()),appendLF = FALSE)
 	XX = matrix(NA,NN,5)
 	XX[,1] = 1; # intercept
 	log_lib_size = rgamma(n = NN,shape = 600,rate = 100) # log(library size)
@@ -292,17 +291,17 @@ CSeQTL_dataGen = function(NN,MAF,true_BETA0 = log(1e3),true_KAPPA,true_ETA,
 	true_ALPHA[eta_one_idx] = 1
 	
 	if( show ){
-		cat(sprintf("%s: True parameter values ...\n",date()))
-		cat(sprintf("   BETA = (%s)\n",paste(round(true_BETA,3),collapse=",")))
-		cat(sprintf("   PHI = %s\n",paste(true_PHI,collapse=",")))
-		cat(sprintf("   KAPPA = (%s)\n",paste(true_KAPPA,collapse=",")))
-		cat(sprintf("   ETA = (%s)\n",paste(true_ETA,collapse=",")))
-		cat(sprintf("   PSI = (%s)\n",paste(true_PSI,collapse=",")))
-		cat(sprintf("   ALPHA = (%s)\n",paste(true_ALPHA,collapse=",")))
+		message(sprintf("%s: True parameter values ...\n",date()),appendLF = FALSE)
+		message(sprintf("   BETA = (%s)\n",paste(round(true_BETA,3),collapse=",")),appendLF = FALSE)
+		message(sprintf("   PHI = %s\n",paste(true_PHI,collapse=",")),appendLF = FALSE)
+		message(sprintf("   KAPPA = (%s)\n",paste(true_KAPPA,collapse=",")),appendLF = FALSE)
+		message(sprintf("   ETA = (%s)\n",paste(true_ETA,collapse=",")),appendLF = FALSE)
+		message(sprintf("   PSI = (%s)\n",paste(true_PSI,collapse=",")),appendLF = FALSE)
+		message(sprintf("   ALPHA = (%s)\n",paste(true_ALPHA,collapse=",")),appendLF = FALSE)
 	}
 	
 	# Simulate outcomes
-	if( show ) cat(sprintf("%s: Simulate TReC and ASReC ...\n",date()))
+	if( show ) message(sprintf("%s: Simulate TReC and ASReC ...\n",date()),appendLF = FALSE)
 	XX2 = XX; cont_vars = c(2,4,5)
 	XX2[,cont_vars] = apply(XX2[,cont_vars],2,function(xx) scale(xx)[,1])
 	XX = XX2
@@ -481,7 +480,7 @@ CSeQTL_oneExtremeSim = function(NN,MAF,true_BETA0,true_KAPPA,true_ETA,
 		sink_fn = sprintf("%s.txt",sim_fn)
 		sink(sink_fn)
 		
-		cat(sprintf("rr = %s\n",rr))
+		message(sprintf("rr = %s\n",rr),appendLF = FALSE)
 		fout = CSeQTL_full_analysis(TREC = sim$dat$total,
 			hap2 = sim$dat$hap2,ASREC = sim$dat$total_phased,
 			PHASE = sim$dat$phased,SNP = sim$true_SNP,
@@ -540,13 +539,13 @@ sim_untrim_v_trim = function(NN,MAF,true_BETA0,true_KAPPA,true_ETA,
 	# Demonstrate Type 1 Error from simulation under H_A with permutation
 	
 	# Simulate data
-	cat(sprintf("%s: Simulate data ...\n",date()))
+	message(sprintf("%s: Simulate data ...\n",date()),appendLF = FALSE)
 	sim = CSeQTL_dataGen(NN = NN,MAF = MAF,true_BETA0 = true_BETA0,
 		true_KAPPA = true_KAPPA,true_ETA = true_ETA,true_PHI = true_PHI,
 		prob_phased = 0.05,true_ALPHA = NULL,RHO = RHO,show = FALSE)
 	
 	# Simulate permuted SNPs
-	cat(sprintf("%s: Generate permuted SNPs ...\n",date()))
+	message(sprintf("%s: Generate permuted SNPs ...\n",date()),appendLF = FALSE)
 	pSNP = matrix(NA,PERMS,NN)
 	for(pp in seq(PERMS)){
 		pSNP[pp,] = sample(sim$true_SNP)
@@ -562,7 +561,7 @@ sim_untrim_v_trim = function(NN,MAF,true_BETA0,true_KAPPA,true_ETA,
 	out = list()
 	for(trim in vec_TRIM){
 		# trim = vec_TRIM[2]; trim
-		cat(sprintf("%s: trim = %s ...\n",date(),trim))
+		message(sprintf("%s: trim = %s ...\n",date(),trim),appendLF = FALSE)
 		
 		gs_out = Rcpp_CSeQTL_GS(XX = sim$XX,TREC_0 = t(sim$dat$total),
 			SNP = t(sim$true_SNP),hap2 = t(sim$dat$hap2),ASREC = t(sim$dat$total_phased),

@@ -2,12 +2,12 @@ Package: CSeQTL
 Type: Package
 Title: Cell Type-Specific eQTL Mapping
 Version: 1.0.0
-Date: 2022-04-01
-Author: Paul Little
-Maintainer: Paul Little <plittle@fredhutch.org>
-Description: Perform bulk and cell type-specific 
-	eQTL mapping with our method referred to as
-	CSeQTL.
+Date: 2025-02-25
+Authors@R: 
+	person("Paul","Little",
+		email = "pllittle321@gmail.com",
+		role = c("aut","cre"))
+Description: Perform bulk and cell type-specific expression quantitative trail loci mapping with our novel method (Little et al. (2023) <doi:10.1038/s41467-023-38795-w>).
 Encoding: UTF-8
 Imports: Rcpp, smarter, ggplot2, multcomp,
 	emdbook, MatrixEQTL, data.table, HelpersMG,
@@ -15,6 +15,5 @@ Imports: Rcpp, smarter, ggplot2, multcomp,
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 7.2.3
 License: GPL (>= 3)
-Suggests: 
-	rmarkdown, knitr
+Suggests: rmarkdown, knitr
 VignetteBuilder: knitr

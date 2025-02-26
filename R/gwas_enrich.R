@@ -20,7 +20,7 @@ get_GWAS_catalog = function(work_dir){
 			
 		}
 		
-		cat(sprintf("%s: Import GWAS catalog ...\n",date()))
+		message(sprintf("%s: Import GWAS catalog ...\n",date()),appendLF = FALSE)
 		gwas = fread(gwas_fn,header = TRUE,sep = "\t",
 			blank.lines.skip = TRUE,data.table = FALSE)
 		
@@ -36,7 +36,7 @@ get_GWAS_catalog = function(work_dir){
 		gwas$CHR_POS = as.integer(gwas$CHR_POS)
 		
 		# Prep Phenotype groupings
-		cat(sprintf("%s: Make phenotype groupings ...\n",date()))
+		message(sprintf("%s: Make phenotype groupings ...\n",date()),appendLF = FALSE)
 		if( TRUE ){
 		gwas$myPHENO = NA
 		gwas$myPHENO[which(is.na(gwas$myPHENO) & 
@@ -245,8 +245,7 @@ run_gwasEnrich_analysis = function(DATA,work_dir,
 	
 	all_EE = names(DATA)
 	all_EE = all_EE[grepl("^EE_",all_EE)]
-	cat(sprintf("%s: Detected %s columns with 'EE_' ...\n",
-		date(),length(all_EE)))
+	message(sprintf("%s: Detected %s columns with 'EE_' ...\n",date(),length(all_EE)),appendLF = FALSE)
 	
 	# Get GWAS catalog
 	gwas = get_GWAS_catalog(work_dir = work_dir)
@@ -268,7 +267,7 @@ run_gwasEnrich_analysis = function(DATA,work_dir,
 	DATA$GG = 0
 	for(chr in chrs){
 		# chr = chrs[1]; chr
-		if( verbose ) cat(sprintf("%s: Get GG for chr = %s ...\n",date(),chr))
+		if( verbose ) message(sprintf("%s: Get GG for chr = %s ...\n",date(),chr),appendLF = FALSE)
 		gwas_chr = gwas[which(gwas$CHR_ID == gsub("chr","",chr)),]
 		idx = DATA$Chr == chr
 		eqtl_pos = DATA$POS[idx]
@@ -280,7 +279,7 @@ run_gwasEnrich_analysis = function(DATA,work_dir,
 	}
 	
 	# Calculate overall gwas enrichment
-	cat(sprintf("%s: Calculate overall enrichment ...\n",date()))
+	message(sprintf("%s: Calculate overall enrichment ...\n",date()),appendLF = FALSE)
 	num_test_loci = nrow(DATA)
 	num_gwas = sum(DATA$GG)
 	gwas_enrich = c()
@@ -302,7 +301,7 @@ run_gwasEnrich_analysis = function(DATA,work_dir,
 	if( verbose ) print(gwas_enrich)
 	
 	# Sort positions and run block jackknife for enrichment
-	cat(sprintf("%s: Run block jackknife enrichment ...\n",date()))
+	message(sprintf("%s: Run block jackknife enrichment ...\n",date()),appendLF = FALSE)
 	chrs2 = intersect(chrs,unique(DATA$Chr))
 	chrs2 = chrs[chrs %in% chrs2]; chrs2
 	DATA$chr2 = factor(DATA$Chr,levels = chrs)
@@ -314,9 +313,9 @@ run_gwasEnrich_analysis = function(DATA,work_dir,
 	for(BLOCK in uBLOCKs){
 		
 		if( verbose ){
-			if( BLOCK %% 2 == 0 ) cat(".")
+			if( BLOCK %% 2 == 0 ) message(".",appendLF = FALSE)
 			if( BLOCK %% 30 == 0 || BLOCK == nBLOCKS )
-				cat(sprintf("%s out of %s\n",BLOCK,nBLOCKS))
+				message(sprintf("%s out of %s\n",BLOCK,nBLOCKS),appendLF = FALSE)
 		}
 		
 		DATA_block = DATA[which(DATA$BLOCK != BLOCK),] # remove one block
@@ -405,8 +404,7 @@ sim_EQTL_RES = function(work_dir){
 		replace = TRUE,prob = prob)
 	
 	# Induce enrichment
-	cat(sprintf("%s: Induce enrichment in simulated dataset ...\n",
-		date()))
+	message(sprintf("%s: Induce enrichment in simulated dataset ...\n",date()),appendLF = FALSE)
 	idx = which(dat$CLASS == 1)
 	dat$EE_A2[idx] = sapply(dat$EE_A2[idx],function(xx){
 		ifelse(xx == 1,1,rbinom(1,1,0.1))
@@ -421,7 +419,7 @@ sim_EQTL_RES = function(work_dir){
 	res = run_gwasEnrich_analysis(DATA = dat,work_dir = work_dir,
 		which_gwas = "gwas_catalog",nBLOCKS = 200,verbose = FALSE)
 	for(wGWAS in names(tab)){
-		cat(sprintf("%s: wGWAS = %s ...\n",date(),wGWAS))
+		message(sprintf("%s: wGWAS = %s ...\n",date(),wGWAS),appendLF = FALSE)
 		res = rbind(res,run_gwasEnrich_analysis(DATA = dat,
 			work_dir = work_dir,which_gwas = wGWAS,
 			nBLOCKS = 200,verbose = FALSE))

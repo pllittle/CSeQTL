@@ -27,14 +27,14 @@ prep_gene_info = function(work_dir,gtf_gz_fn = NULL){
 		tmp_url = "https://personal.broadinstitute.org"
 		tmp_url = file.path(tmp_url,"francois/topmed")
 		tmp_url = file.path(tmp_url,"gencode.v26.GRCh38.ERCC.genes.gtf.gz")
-		cat(sprintf("A possible input file can be obtained at \n  %s\n",tmp_url))
+		message(sprintf("A possible input file can be obtained at \n  %s\n",tmp_url),appendLF = FALSE)
 		
 	}
 	
 	# Prep input for TREC/ASREC script
 	exon_fn = file.path(work_dir,"exon_by_genes.rds")
 	if( !file.exists(exon_fn) ){
-		cat("Make TxDb...\n")
+		message("Make TxDb...\n",appendLF = FALSE)
 		exdb = suppressWarnings(makeTxDbFromGFF(file = gtf_gz_fn,format = "gtf"))
 		exons_list_per_gene = exonsBy(x = exdb,by = "gene")
 		saveRDS(object = exons_list_per_gene,file = exon_fn)
