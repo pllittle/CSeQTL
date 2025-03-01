@@ -1,6 +1,6 @@
 Package: CSeQTL
 Type: Package
-Title: Cell Type-Specific eQTL Mapping
+Title: Cell Type-Specific Expression Quantitative Trail Loci Mapping
 Version: 1.0.0
 Date: 2025-02-25
 Authors@R: 

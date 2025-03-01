@@ -50,6 +50,11 @@ Subjects with standardized Cooks' Distances greater than the threshold are trimm
 \item{showRHO}{Boolean for seeing a preview of how 
 proportions are distributed.}
 }
+\value{
+Simulation results for OLS-based approach with per replicate
+and per cell type metrics including p-values, OLS effect sizes,
+and proportion of samples with trimmed outcomes.
+}
 \description{
 OLS_sim
 }

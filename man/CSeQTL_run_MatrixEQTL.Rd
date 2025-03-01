@@ -26,6 +26,10 @@ MatrixEQTL output}
 \item{cisDist}{A positive integer for number of SNPs to
 include relative to the gene body}
 }
+\value{
+The MatrixEQTL output file/R dataframe generated containing genes, 
+SNPs, associated p-values, effect sizes, etc.
+}
 \description{
 CSeQTL_run_MatrixEQTL
 }

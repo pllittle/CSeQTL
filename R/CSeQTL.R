@@ -47,7 +47,11 @@ chk_XX = function(XX){
 #'	library sizes per subject.
 #' @inheritParams CSeQTL_oneExtremeSim
 #' @inheritParams CSeQTL_dataGen
-#'
+#' @return A R list containing multiple objects. \code{res} is a R dataframe
+#'	containing the model fitted, marginal model indicator, TRIM indicator, 
+#'	permutation indicator, cell types, utilized allele-specific reads indicator,
+#'	A and B allele-specific expression, eta/eqtl fold change estimate, p-value.
+#'	\code{out} contains lists of detailed estimates per model fit.
 #' @export
 CSeQTL_full_analysis = function(TREC,hap2,ASREC,PHASE,SNP,RHO,XX,
 	log_lib_size,vec_MARG = c(TRUE,FALSE),vec_TRIM = c(TRUE,FALSE),
@@ -190,7 +194,7 @@ CSeQTL_full_analysis = function(TREC,hap2,ASREC,PHASE,SNP,RHO,XX,
 	}}}}}
 	if( show ) print(res)
 	
-	list(res = res,out = out,trim_TREC = trim_TREC)
+	return(list(res = res,out = out,trim_TREC = trim_TREC))
 }
 check_cont = function(xx){
 	if( all(xx == 1) ){
@@ -252,8 +256,15 @@ polish_res = function(gs_out,celltypes,rdnum = 5){
 #'	Otherwise a subset of cell types can be displayed using an integer vector
 #'	of columns or character vector of column names of \code{RHO} can 
 #'	be provided.
-#'
 #' @inheritParams CSeQTL_full_analysis
+#' @return A R list containing \code{lm()} output for \code{lm_out}, 
+#'	a R dataframe for \code{out_df} containing regression estimates, 
+#'	standard errors, p-values. \code{res_trim} provides a summary of trimmed 
+#'	results over a grid of cut-off values and number of samples trimmed.
+#'	\code{cooksd} is a numeric vector of median shifted and MAD scaled 
+#'	Cook's distances per sample. \code{prop_trim}, a numeric value for 
+#'	number of samples with outcome values trimmed for the user-specified
+#'	\code{thres_TRIM} value.
 #'
 #' @export
 CSeQTL_linearTest = function(input,XX,RHO,SNP,YY = NULL,MARG = FALSE,
@@ -414,6 +425,10 @@ CSeQTL_linearTest = function(input,XX,RHO,SNP,YY = NULL,MARG = FALSE,
 		
 		oma = rep(0,4)
 		if( main_plot != "" ) oma = c(0,0,2,0)
+		
+		oldpar = par(no.readonly = TRUE)
+		on.exit(par(oldpar))
+		
 		par(mfrow = c(1,1),mar = c(5,4,4,2)+0.1)
 		if( QQ == 1 ){
 			SNP2_char = "black"
@@ -497,9 +512,9 @@ CSeQTL_linearTest = function(input,XX,RHO,SNP,YY = NULL,MARG = FALSE,
 	}
 	
 	# Output
-	list(lm_out = lm_full,out_df = out_df,
+	return(list(lm_out = lm_full,out_df = out_df,
 		res_trim = res_trim,cooksd = cooksd,
-		prop_trim = prop_trim)
+		prop_trim = prop_trim))
 }
 
 #' @title CSeQTL_run_MatrixEQTL
@@ -514,7 +529,8 @@ CSeQTL_linearTest = function(input,XX,RHO,SNP,YY = NULL,MARG = FALSE,
 #' @param cisDist A positive integer for number of SNPs to
 #'	include relative to the gene body
 #' @inheritParams CSeQTL_full_analysis
-#'
+#' @return The MatrixEQTL output file/R dataframe generated containing genes, 
+#'	SNPs, associated p-values, effect sizes, etc.
 #' @export
 CSeQTL_run_MatrixEQTL = function(TREC,RD,XX,SNP,out_cis_fn,cisDist = 1e6){
 	
@@ -578,7 +594,7 @@ CSeQTL_run_MatrixEQTL = function(TREC,RD,XX,SNP,out_cis_fn,cisDist = 1e6){
 	me_res = fread(out_cis_fn,data.table = FALSE)
 	unlink(out_cis_fn)
 	
-	me_res
+	return(me_res)
 }
 
 #' @title OLS_sim
@@ -586,7 +602,9 @@ CSeQTL_run_MatrixEQTL = function(TREC,RD,XX,SNP,out_cis_fn,cisDist = 1e6){
 #' @inheritParams CSeQTL_linearTest
 #' @param showRHO Boolean for seeing a preview of how 
 #'	proportions are distributed.
-#' 
+#' @return Simulation results for OLS-based approach with per replicate
+#'	and per cell type metrics including p-values, OLS effect sizes,
+#'	and proportion of samples with trimmed outcomes.
 #' @export
 OLS_sim = function(NN,MAF,true_BETA0,true_KAPPA,true_ETA,wRHO,RR,
 	trim = FALSE,thres_TRIM = 10,showRHO = TRUE){
@@ -641,6 +659,9 @@ OLS_sim = function(NN,MAF,true_BETA0,true_KAPPA,true_ETA,wRHO,RR,
 		xlab = "Prop Subjs Trimmed",main = "",cex.lab = 1.3)
 	
 	# Check out p-value distribution and Type 1 Error
+	oldpar = par(no.readonly = TRUE)
+	on.exit(par(oldpar))
+	
 	par(mfrow = c(3,4),oma = c(0,0,2,0))
 	for(ct in seq(QQ)){
 		# ct = 1
@@ -671,7 +692,7 @@ OLS_sim = function(NN,MAF,true_BETA0,true_KAPPA,true_ETA,wRHO,RR,
 	mtext(plot_text,outer = TRUE,cex = 1.4)
 	par(mfrow = c(1,1),oma = rep(0,4))
 	
-	list(PVAL = PVAL,EQTL = EQTL,pTRIM = pTRIM)
+	return(list(PVAL = PVAL,EQTL = EQTL,pTRIM = pTRIM))
 }
 
 #' @title plot_RHO
@@ -686,6 +707,9 @@ plot_RHO = function(RHO,main_plot = "",...){
 	
 	oma = rep(0,4)
 	if( main_plot != "" ) oma = c(0,0,2,0)
+	
+	oldpar = par(no.readonly = TRUE)
+	on.exit(par(oldpar))
 	
 	par(mfrow = c(num_rows,num_cols),oma = oma,mar = c(4,4,0.1,0.1))
 	for(CT_1 in seq(QQ)){

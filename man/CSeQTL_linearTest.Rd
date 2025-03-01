@@ -67,6 +67,16 @@ Otherwise a subset of cell types can be displayed using an integer vector
 of columns or character vector of column names of \code{RHO} can 
 be provided.}
 }
+\value{
+A R list containing \code{lm()} output for \code{lm_out}, 
+a R dataframe for \code{out_df} containing regression estimates, 
+standard errors, p-values. \code{res_trim} provides a summary of trimmed 
+results over a grid of cut-off values and number of samples trimmed.
+\code{cooksd} is a numeric vector of median shifted and MAD scaled 
+Cook's distances per sample. \code{prop_trim}, a numeric value for 
+number of samples with outcome values trimmed for the user-specified
+\code{thres_TRIM} value.
+}
 \description{
 Runs marginal and cell type-specific 
 analysis using ordinary least squares.

@@ -3,6 +3,9 @@
 # ----------
 get_GWAS_catalog = function(work_dir){
 	
+	oldwd = getwd()
+	on.exit(setwd(oldwd))
+	
 	gwas_rds_fn = file.path(work_dir,"gwas_catalog_v1.0.rds")
 	
 	if( !file.exists(gwas_rds_fn) ){

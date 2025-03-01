@@ -462,12 +462,6 @@ CSeQTL_oneExtremeSim = function(NN,MAF,true_BETA0,true_KAPPA,true_ETA,
 				yy
 				})
 			all_trec[idx_influ]		= noise_trec
-			if(FALSE){
-				par(mfrow=c(1,2))
-				boxplot(sim$dat$total ~ sim$true_SNP)
-				boxplot(all_trec ~ sim$true_SNP)
-				par(mfrow=c(1,1))
-			}
 			sim$dat$total				= all_trec
 		}
 		

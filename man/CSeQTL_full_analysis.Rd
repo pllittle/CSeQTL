@@ -62,6 +62,13 @@ to decrease computational runtime.}
 \item{show}{A boolean value to display verbose output and plot intermediate 
 simulated results.}
 }
+\value{
+A R list containing multiple objects. \code{res} is a R dataframe
+containing the model fitted, marginal model indicator, TRIM indicator, 
+permutation indicator, cell types, utilized allele-specific reads indicator,
+A and B allele-specific expression, eta/eqtl fold change estimate, p-value.
+\code{out} contains lists of detailed estimates per model fit.
+}
 \description{
 Performs marginal and cell type-specific eQTL analysis
 with both CSeQTL and OLS models for simulation and comparative purposes.
