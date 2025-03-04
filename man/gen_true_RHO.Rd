@@ -19,6 +19,10 @@ set to 3 cell types.}
 type proportions. If a matrix of proportions is supplied, 
 this function will append row/column names.}
 }
+\value{
+A numeric matrix with \code{QQ} columns and \code{NN} rows
+of cell type proportions per sample and cell type.
+}
 \description{
 Simulates cell type proportions under three scenarios.
 }

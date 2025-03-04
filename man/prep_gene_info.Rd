@@ -14,6 +14,9 @@ data.}
 \item{gtf_gz_fn}{A character string full path
 of the gz compressed gtf file}
 }
+\value{
+Null. No value returned.
+}
 \description{
 Prepare GTF files for gene and 
 exon level information

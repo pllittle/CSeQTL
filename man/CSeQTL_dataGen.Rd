@@ -66,6 +66,10 @@ type-specific differentiated expression, a marginal eQTL may be incorrectly infe
 \item{show}{A boolean value to display verbose output and plot intermediate 
 simulated results.}
 }
+\value{
+A R list containing true parameters governing the simulated dataset,
+simulated covariate matrix \code{XX}, observed outcomes in \code{dat}.
+}
 \description{
 Simulates a gene/SNP pair with baseline covariates \code{XX},
 cell type compositions \code{true_RHO}, phased SNP genotypes \code{true_SNP},

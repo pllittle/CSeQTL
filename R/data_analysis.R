@@ -9,6 +9,7 @@
 #'	data.
 #' @param gtf_gz_fn A character string full path
 #'	of the gz compressed gtf file
+#' @return Null. No value returned.
 #' @export
 prep_gene_info = function(work_dir,gtf_gz_fn = NULL){
 	

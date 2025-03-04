@@ -18,6 +18,8 @@ calc_POWER_2 = function(PVAL,alpha = 0.05){
 #' @param RHO Default to \code{NULL} leads to simulating cell 
 #'	type proportions. If a matrix of proportions is supplied, 
 #'	this function will append row/column names.
+#' @return A numeric matrix with \code{QQ} columns and \code{NN} rows
+#'	of cell type proportions per sample and cell type.
 #' @export
 gen_true_RHO = function(wRHO = 1,NN,QQ,RHO = NULL){
 	if(FALSE){
@@ -79,7 +81,7 @@ gen_true_RHO = function(wRHO = 1,NN,QQ,RHO = NULL){
 		
 	}
 	
-	true_RHO
+	return(true_RHO)
 }
 gen_gene_TREC_ASREC = function(XX,RHO,gene_BETA,gene_PHI,
 	gene_SNP_eQTL,gene_KAPPA,gene_ETA,gene_ALPHA,gene_PSI,prob_phased){
@@ -205,7 +207,8 @@ gen_gene_TREC_ASREC = function(XX,RHO,gene_BETA,gene_PHI,
 #'	type-specific differentiated expression, a marginal eQTL may be incorrectly inferred.
 #' @param show A boolean value to display verbose output and plot intermediate 
 #'	simulated results.
-#'
+#' @return A R list containing true parameters governing the simulated dataset,
+#'	simulated covariate matrix \code{XX}, observed outcomes in \code{dat}.
 #' @export
 CSeQTL_dataGen = function(NN,MAF,true_BETA0 = log(1e3),true_KAPPA,true_ETA,
 	true_PHI = 0.1,true_PSI = 0.05,prob_phased = 0.05,true_ALPHA = NULL,
@@ -349,10 +352,10 @@ CSeQTL_dataGen = function(NN,MAF,true_BETA0 = log(1e3),true_KAPPA,true_ETA,
 	}
 	
 	colnames(XX) = paste0("X",seq(ncol(XX)))
-	list(true_PARS = true_PARS,true_SNP = true_SNP,dat = dat,XX = XX,
+	return(list(true_PARS = true_PARS,true_SNP = true_SNP,dat = dat,XX = XX,
 		true_RHO = true_RHO,QQ = QQ,GI = GI,np = np,I_np = I_np,
 		iBETA = iBETA,iPHI = iPHI,MU = Rcpp_CSeQTL_MU(GI = GI,PARS = true_PARS),
-		true_OF = OF,vname = vname)
+		true_OF = OF,vname = vname))
 }
 
 #' @title CSeQTL_oneExtremeSim
@@ -377,7 +380,10 @@ CSeQTL_dataGen = function(NN,MAF,true_BETA0 = log(1e3),true_KAPPA,true_ETA,
 #' @param sim_fn Character value specifying the full path and filename
 #'	to store intermediate simulation replicates should errors arise.
 #' @inheritParams CSeQTL_dataGen
-#'
+#' @return A R list containing the results of a small-scale simulation.
+#'	\code{res} contains replicate-specific results while \code{ures} contains
+#'	overall simulation results include power, frequency of replicates with 
+#'	constrained eta estimates and gene expressions inferred to be zero after optimization.
 #' @export
 CSeQTL_oneExtremeSim = function(NN,MAF,true_BETA0,true_KAPPA,true_ETA,
 	true_PHI = 0.1,wRHO,noiseRHO = 0,RR = 5e1,vec_MARG = c(TRUE,FALSE),
@@ -514,7 +520,7 @@ CSeQTL_oneExtremeSim = function(NN,MAF,true_BETA0,true_KAPPA,true_ETA,
 	# ures
 	# ures[which(ures$PERM==TRUE),]
 	
-	list(res = res,ures = ures)
+	return(list(res = res,ures = ures))
 	
 }
 sim_untrim_v_trim = function(NN,MAF,true_BETA0,true_KAPPA,true_ETA,

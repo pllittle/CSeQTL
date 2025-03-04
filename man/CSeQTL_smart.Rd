@@ -117,6 +117,12 @@ to decrease computational runtime.}
 \item{show}{A boolean value to display verbose output and plot intermediate 
 simulated results.}
 }
+\value{
+A R list of statistics and metrics after optimizing the model for a single SNP.
+The list contains parameter MLEs, gradient vectors, covariance matrices,
+gene expression estimates, fold change estimates, convergence indicators, 
+likelihood ratio test statistics, and associated p-values.
+}
 \description{
 A function to understand the novelties within CSeQTL. 
 The user can experiment with trimming TReC, assess parameter estimation, 

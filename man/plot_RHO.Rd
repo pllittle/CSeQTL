@@ -14,6 +14,9 @@ correspond to subjects and columns correspond to cell types.}
 
 \item{...}{Arguments for \code{plot(x,y,bty = "n",...)}.}
 }
+\value{
+Null. A plot of cell type proportions per cell type across \code{NN} samples.
+}
 \description{
 plot_RHO
 }

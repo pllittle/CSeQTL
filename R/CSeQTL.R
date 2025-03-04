@@ -157,7 +157,6 @@ CSeQTL_full_analysis = function(TREC,hap2,ASREC,PHASE,SNP,RHO,XX,
 			tmp_res = smart_df(tmp_res)
 			tmp_res$P_final = apply(tmp_res[,c("P_trec","P_trecase","P_cistrans")],1,
 				function(xx) ifelse(xx[3] < 0.05,xx[1],xx[2]))
-			# if( show ) print(tmp_res)
 			out[[out_nm]] = list(res = tmp_res,log_ETA = log_ETA,MU = MU)
 			
 			res = rbind(res,smart_df(MODEL = model,
@@ -192,7 +191,7 @@ CSeQTL_full_analysis = function(TREC,hap2,ASREC,PHASE,SNP,RHO,XX,
 		}
 		
 	}}}}}
-	if( show ) print(res)
+	if( show ) message(res,appendLF = FALSE)
 	
 	return(list(res = res,out = out,trim_TREC = trim_TREC))
 }
@@ -568,8 +567,8 @@ CSeQTL_run_MatrixEQTL = function(TREC,RD,XX,SNP,out_cis_fn,cisDist = 1e6){
 	snpspos$pos = as.integer(sapply(snpspos$snpid,function(xx)
 		strsplit(xx,":")[[1]][2],USE.NAMES = FALSE))
 	if( ncol(snpspos) != 3 ){
-		print(str(snpspos))
-		print(head(snpspos))
+		message(str(snpspos),appendLF = FALSE)
+		message(head(snpspos),appendLF = FALSE)
 	}
 	
 	genepos = smart_df(geneid = rownames(TREC))
@@ -698,6 +697,7 @@ OLS_sim = function(NN,MAF,true_BETA0,true_KAPPA,true_ETA,wRHO,RR,
 #' @title plot_RHO
 #' @param ... Arguments for \code{plot(x,y,bty = "n",...)}.
 #' @inheritParams CSeQTL_linearTest
+#' @return Null. A plot of cell type proportions per cell type across \code{NN} samples.
 #' @export
 plot_RHO = function(RHO,main_plot = "",...){
 	QQ = ncol(RHO)
@@ -772,7 +772,10 @@ plot_RHO = function(RHO,main_plot = "",...){
 #'	is achieved based on the L2 norm of the product of the 
 #'	inverse hessian and gradient.
 #' @inheritParams CSeQTL_full_analysis
-#'
+#' @return A R list of statistics and metrics after optimizing the model for a single SNP.
+#'	The list contains parameter MLEs, gradient vectors, covariance matrices,
+#'	gene expression estimates, fold change estimates, convergence indicators, 
+#'	likelihood ratio test statistics, and associated p-values.
 #' @export
 CSeQTL_smart = function(TREC,hap2,ASREC,PHASE,SNP,RHO,XX,
 	upPHI,upKAPPA,upETA,upPSI,upALPHA,iFullModel = FALSE,trim = FALSE,
@@ -926,7 +929,7 @@ CSeQTL_smart = function(TREC,hap2,ASREC,PHASE,SNP,RHO,XX,
 	}
 	
 	# Output
-	bs_out
+	return(bs_out)
 	
 }
 
@@ -980,7 +983,9 @@ CSeQTL_smart = function(TREC,hap2,ASREC,PHASE,SNP,RHO,XX,
 #' @param ncores A positive integer specifying the number of threads available
 #'	to decrease computational runtime when performing trimming and looping through SNPs.
 #' @param show A boolean value to display verbose output.
-#' 
+#' @return A R list of statistics and metrics after optimizing the model across multiple SNPs.
+#'	The list contains parameter MLEs, gene expression estimates, fold change estimates, 
+#'	convergence indicators, likelihood ratio test statistics, and associated p-values.
 #' @export
 CSeQTL_GS = function(XX,TREC,SNP,hap2,ASREC,PHASE,RHO,trim = TRUE,
 	thres_TRIM = 20,numAS = 5,numASn = 5,numAS_het = 5,cistrans = 0.01,
@@ -1092,7 +1097,7 @@ CSeQTL_GS = function(XX,TREC,SNP,hap2,ASREC,PHASE,RHO,trim = TRUE,
 		MUa_trec = MU_A,ETA_trec = ETA,ETA_final = diag(gs_out$ETA[ext_idx,,drop=FALSE]),
 		PVAL_final = diag(PVAL_eqtl[ext_idx,,drop=FALSE]),
 		CISTRANS = ifelse(diag(CIS_eqtl[ext_idx,,drop=FALSE])==1,"CIS","TRANS"))
-	print(out_res)
+	message(out_res,appendLF = FALSE)
 	
 	gs_out$SNP_subj_order = SNP_subj_order
 	

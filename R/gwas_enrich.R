@@ -255,7 +255,6 @@ run_gwasEnrich_analysis = function(DATA,work_dir,
 	
 	# Subset phenotype
 	sub_phenotypes = names(table(gwas$myPHENO))
-	# print(sub_phenotypes)
 	if( which_gwas == "gwas_catalog" ){
 		gwas = gwas
 	} else if( which_gwas %in% sub_phenotypes ){
@@ -301,7 +300,7 @@ run_gwasEnrich_analysis = function(DATA,work_dir,
 	gwas_enrich$frac_all = gwas_enrich$n_eqtl / gwas_enrich$n_test
 	gwas_enrich$enrich = gwas_enrich$frac_gwas / gwas_enrich$frac_all
 	gwas_enrich$enrich[is.na(gwas_enrich$enrich) | gwas_enrich$enrich == 0] = 1
-	if( verbose ) print(gwas_enrich)
+	if( verbose ) message(gwas_enrich,appendLF = FALSE)
 	
 	# Sort positions and run block jackknife for enrichment
 	message(sprintf("%s: Run block jackknife enrichment ...\n",date()),appendLF = FALSE)

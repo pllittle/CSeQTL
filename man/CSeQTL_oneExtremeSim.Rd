@@ -69,6 +69,12 @@ to decrease computational runtime.}
 \item{sim_fn}{Character value specifying the full path and filename
 to store intermediate simulation replicates should errors arise.}
 }
+\value{
+A R list containing the results of a small-scale simulation.
+\code{res} contains replicate-specific results while \code{ures} contains
+overall simulation results include power, frequency of replicates with 
+constrained eta estimates and gene expressions inferred to be zero after optimization.
+}
 \description{
 Performs a simulation with multiple replicates
 for a pre-specified set of arguments.

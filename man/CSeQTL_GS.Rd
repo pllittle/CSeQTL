@@ -84,6 +84,11 @@ to decrease computational runtime when performing trimming and looping through S
 
 \item{show}{A boolean value to display verbose output.}
 }
+\value{
+A R list of statistics and metrics after optimizing the model across multiple SNPs.
+The list contains parameter MLEs, gene expression estimates, fold change estimates, 
+convergence indicators, likelihood ratio test statistics, and associated p-values.
+}
 \description{
 Main function that performs eQTL mapping on one 
 gene with its associated SNPs.
